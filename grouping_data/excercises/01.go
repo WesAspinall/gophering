@@ -15,4 +15,6 @@ func main() {
 	for _, v := range arr {
 		fmt.Println(v)
 	}
+
+	fmt.Printf("%T\n", arr)
 }

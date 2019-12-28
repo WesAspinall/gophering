@@ -13,7 +13,9 @@ func main() {
 	x["Wes_A"] = []string{`Coffee`, `iPhones`, `Lamborghinis`}
 
 	// delete a record
-	delete(x, "bond_james")
+	if _, ok := x["bond_james"]; ok {
+		delete(x, "bond_james")
+	}
 
 	for i, v := range x {
 		fmt.Printf("This is the record for %v\n", i)

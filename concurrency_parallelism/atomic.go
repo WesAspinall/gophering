@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"runtime"
 	"sync"
+	"sync/atomic"
 )
 
 // using atomic to add a value to an int64
@@ -12,22 +13,17 @@ func main() {
 	fmt.Println("Number of CPUs:", runtime.NumCPU())
 	fmt.Println("Number of Goroutines:", runtime.NumGoroutine())
 
-	counter := 0
+	var counter int64
 
 	const gs = 100
 	var wg sync.WaitGroup
 	wg.Add(gs)
-	var mu sync.Mutex
 
 	for i := 0; i < gs; i++ {
 		go func() {
-			mu.Lock()
-			v := counter
-
+			atomic.AddInt64(&counter, 1)                         // write to counter
+			fmt.Println("Counter\t", atomic.LoadInt64(&counter)) //read from counter
 			runtime.Gosched()
-			v++
-			counter = v
-			mu.Unlock()
 			wg.Done()
 		}()
 		fmt.Println("Goroutines:", runtime.NumGoroutine())

@@ -1,5 +1,7 @@
 package codewars
 
+//https://www.codewars.com/kata/camelcase-method/go
+
 import (
 	. "strings"
 )
